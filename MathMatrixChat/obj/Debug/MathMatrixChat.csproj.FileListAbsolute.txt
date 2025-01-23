@@ -1,0 +1,7 @@
+C:\Users\STUDENT\source\repos\MathMatrixChat\MathMatrixChat\bin\Debug\MathMatrixChat.exe.config
+C:\Users\STUDENT\source\repos\MathMatrixChat\MathMatrixChat\bin\Debug\MathMatrixChat.exe
+C:\Users\STUDENT\source\repos\MathMatrixChat\MathMatrixChat\bin\Debug\MathMatrixChat.pdb
+C:\Users\STUDENT\source\repos\MathMatrixChat\MathMatrixChat\obj\Debug\MathMatrixChat.csproj.AssemblyReference.cache
+C:\Users\STUDENT\source\repos\MathMatrixChat\MathMatrixChat\obj\Debug\MathMatrixChat.csproj.CoreCompileInputs.cache
+C:\Users\STUDENT\source\repos\MathMatrixChat\MathMatrixChat\obj\Debug\MathMatrixChat.exe
+C:\Users\STUDENT\source\repos\MathMatrixChat\MathMatrixChat\obj\Debug\MathMatrixChat.pdb
