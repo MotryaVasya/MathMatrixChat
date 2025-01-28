@@ -10,27 +10,19 @@ using System.Threading.Tasks;
 
 namespace MathMatrixChat
 {
-    public class Matrix<T>
+    public class Matrix
     {
         public int Rows { get; }
         public int Columns { get; }
-        public T[,] Matrixx { get; }
-
+        public double[,] Matrixx { get; }
+        #region Constructors
         public Matrix(int rows, int columns) // конструктор нулевой матрицы
         {
-            Type type = typeof(T);
-            TypeCode typeCode = Type.GetTypeCode(type);
-            if (typeCode >= TypeCode.SByte && typeCode <= TypeCode.Decimal)
-            {
-                Matrixx = new T[rows, columns];
-                Rows = rows; Columns = columns;
-            }
-            else
-            {
-                throw new ArgumentException("нельзя использовать тип: string");
-            }
+            Matrixx = new double[rows, columns];
+            Rows = rows; Columns = columns;
+
         }
-        public Matrix(int rows, int columns, T element) : this(rows, columns)
+        public Matrix(int rows, int columns, double element) : this(rows, columns)
         {
             for (int i = 0; i < rows; i++)
             {
@@ -41,10 +33,33 @@ namespace MathMatrixChat
             }
         }
 
-        public static bool operator !=(Matrix<T> a, Matrix<T> b)
+        public Matrix(int rows, int columns, double[] elements, bool refill = false, double filling = 0) : this(rows, columns)
+        {
+            if (rows * columns != elements.Length && !refill) throw new ArgumentException("");
+            int curent_e = 0;
+            if (elements.Length > rows * columns) throw new ArgumentException("Слишком большой массив данных");
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    if (curent_e == elements.Length)
+                    {
+                        if (filling == 0) return;
+                        Matrixx[i, j] = filling;
+                    }
+                    if (curent_e < elements.Length)
+                    {
+                        Matrixx[i, j] = elements[curent_e];
+                        curent_e++;
+                    }
+                }
+            }
+        }
+        #endregion
+        #region Math operation
+        public static bool operator !=(Matrix a, Matrix b)
         {
             if (a.Columns == b.Columns || a.Rows == a.Rows) return false;
-
             for (int i = 0; i < a.Rows; i++)
             {
                 for (int j = 0; j < a.Columns; j++)
@@ -57,7 +72,7 @@ namespace MathMatrixChat
             }
             return true;
         }
-        public static bool operator ==(Matrix<T> a, Matrix<T> b)
+        public static bool operator ==(Matrix a, Matrix b)
         {
             if (a.Columns != b.Columns || a.Rows != a.Rows) return false;
 
@@ -73,26 +88,26 @@ namespace MathMatrixChat
             }
             return true;
         }
-
-        public static Matrix<T> operator *(Matrix<T> a, decimal value)
+        public static Matrix operator *(Matrix a, double value)
         {
-            dynamic v = value;
+            Matrix res = new Matrix(a.Rows, a.Columns);
             for (int i = 0; i < a.Columns; i++)
             {
                 for (int j = 0; j < a.Rows; j++)
                 {
-                    a.Matrixx[i, j] *= v;
+                    res.Matrixx[i, j] = a.Matrixx[i, j] * value;
                 }
             }
-            return a;
+            return res;
         }
-        public static Matrix<T> operator *(Matrix<T> a, Matrix<T> b)
+        public static Matrix operator *(Matrix a, Matrix b)
         {
-            if (a.Columns != b.Rows) throw new ArgumentException("Умнажать матрицы можно только когда кол-во столбцов у первой матрицы совподают с кол-во строк во второй.");
+            if (a.Columns != b.Rows) throw new
+                    ArgumentException("Умнажать матрицы можно только когда кол-во столбцов у первой матрицы совподают с кол-во строк во второй.");
 
-            Matrix<T> matrix = new Matrix<T>(a.Rows, b.Columns);
-            dynamic first_value;
-            dynamic second_value;
+            Matrix matrix = new Matrix(a.Rows, b.Columns);
+            double first_value;
+            double second_value;
 
             for (int i = 0; i < a.Columns; i++)
             {
@@ -105,5 +120,75 @@ namespace MathMatrixChat
             }
             return a;
         }
+        public static Matrix operator +(Matrix a) => a;
+        public static Matrix operator +(Matrix a, Matrix b)
+        {
+            if (a.Rows != b.Rows && a.Columns != b.Columns) throw new ArgumentException("не совподают матрицы!");
+            Matrix res = new Matrix(a.Rows, a.Columns);
+            for (int i = 0; i < a.Rows; i++)
+            {
+                for (int j = 0; j < a.Columns; j++)
+                {
+                    res.Matrixx[i, j] = a.Matrixx[i, j] + b.Matrixx[i, j];
+                }
+            }
+            return res;
+        }
+        public static Matrix operator -(Matrix a) => a * (-1);
+        public static Matrix operator -(Matrix a, Matrix b) => a + b * (-1);
+
+        //public static Matrix operator /(Matrix a, Matrix b)
+        //{
+        //    Matrix res = new Matrix(a.Rows, a.Columns);
+        //}
+
+        public Matrix Transpose()
+        {
+            Matrix res = new Matrix(Columns, Rows);
+            for (int i = 0; i < Rows; i++)
+            {
+                for (int j = 0; j < Columns; j++)
+                {
+                   res.Matrixx[i, j] = Matrixx[j, i]; 
+                }
+            }
+
+
+            return res;
+        }
+
+        #endregion
+
+        #region Override
+        public override string ToString()
+        {
+            string res = "";
+            for (int i = 0; i < Rows; i++)
+            {
+                for (int j = 0; j < Columns; j++)
+                {
+                    res += $"{Matrixx[i, j],-6}";
+                }
+                if (i < Rows - 1) res += "\n";
+            }
+            return res;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Matrix matrix &&
+                   Rows == matrix.Rows &&
+                   Columns == matrix.Columns &&
+                   EqualityComparer<double[,]>.Default.Equals(Matrixx, matrix.Matrixx);
+        }
+        public override int GetHashCode()
+        {
+            int hashCode = -2035033584;
+            hashCode = hashCode * -1521134295 + Rows.GetHashCode();
+            hashCode = hashCode * -1521134295 + Columns.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<double[,]>.Default.GetHashCode(Matrixx);
+            return hashCode;
+        }
+        #endregion
     }
 }

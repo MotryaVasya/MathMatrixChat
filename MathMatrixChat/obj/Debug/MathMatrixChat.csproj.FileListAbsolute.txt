@@ -5,3 +5,10 @@ C:\Users\STUDENT\source\repos\MathMatrixChat\MathMatrixChat\obj\Debug\MathMatrix
 C:\Users\STUDENT\source\repos\MathMatrixChat\MathMatrixChat\obj\Debug\MathMatrixChat.csproj.CoreCompileInputs.cache
 C:\Users\STUDENT\source\repos\MathMatrixChat\MathMatrixChat\obj\Debug\MathMatrixChat.exe
 C:\Users\STUDENT\source\repos\MathMatrixChat\MathMatrixChat\obj\Debug\MathMatrixChat.pdb
+C:\Users\vaso\OneDrive\Документы\GitHub\MathMatrixChat\MathMatrixChat\bin\Debug\MathMatrixChat.exe.config
+C:\Users\vaso\OneDrive\Документы\GitHub\MathMatrixChat\MathMatrixChat\bin\Debug\MathMatrixChat.exe
+C:\Users\vaso\OneDrive\Документы\GitHub\MathMatrixChat\MathMatrixChat\bin\Debug\MathMatrixChat.pdb
+C:\Users\vaso\OneDrive\Документы\GitHub\MathMatrixChat\MathMatrixChat\obj\Debug\MathMatrixChat.csproj.AssemblyReference.cache
+C:\Users\vaso\OneDrive\Документы\GitHub\MathMatrixChat\MathMatrixChat\obj\Debug\MathMatrixChat.csproj.CoreCompileInputs.cache
+C:\Users\vaso\OneDrive\Документы\GitHub\MathMatrixChat\MathMatrixChat\obj\Debug\MathMatrixChat.exe
+C:\Users\vaso\OneDrive\Документы\GitHub\MathMatrixChat\MathMatrixChat\obj\Debug\MathMatrixChat.pdb
