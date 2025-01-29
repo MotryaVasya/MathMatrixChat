@@ -16,11 +16,14 @@ namespace MathMatrixChat
         public int Columns { get; }
         public double[,] Matrixx { get; }
         #region Constructors
-        public Matrix(int rows, int columns) // конструктор нулевой матрицы
+        public Matrix(int rows, int columns, bool isSingle = false) // конструктор нулевой матрицы
         {
-            Matrixx = new double[rows, columns];
             Rows = rows; Columns = columns;
-
+            Matrixx = new double[rows, columns];
+            if (isSingle)
+                if (rows != columns) throw new ArgumentException("Единичная матрица должна быть квадратной");
+                for (int i = 0; i < rows; i++) Matrixx[i,i] = 1;
+            
         }
         public Matrix(int rows, int columns, double element) : this(rows, columns)
         {
@@ -105,20 +108,17 @@ namespace MathMatrixChat
             if (a.Columns != b.Rows) throw new
                     ArgumentException("Умнажать матрицы можно только когда кол-во столбцов у первой матрицы совподают с кол-во строк во второй.");
 
-            Matrix matrix = new Matrix(a.Rows, b.Columns);
-            double first_value;
-            double second_value;
+            Matrix res = new Matrix(a.Rows, b.Columns);
 
-            for (int i = 0; i < a.Columns; i++)
+            for (int i = 0; i < res.Rows; i++)
             {
-                for (int j = 0; j < a.Rows; j++)
+                for (int j = 0; j < res.Columns; j++)
                 {
-                    first_value = b.Matrixx[0, j];
-                    second_value = a.Matrixx[i, 0];
-
+                    for (int k = 0; k < a.Columns; k++) 
+                        res.Matrixx[i, j] += a.Matrixx[i, k] * b.Matrixx[k, j];
                 }
             }
-            return a;
+            return res;
         }
         public static Matrix operator +(Matrix a) => a;
         public static Matrix operator +(Matrix a, Matrix b)
@@ -149,7 +149,7 @@ namespace MathMatrixChat
             {
                 for (int j = 0; j < Columns; j++)
                 {
-                   res.Matrixx[i, j] = Matrixx[j, i]; 
+                    res.Matrixx[i, j] = Matrixx[j, i];
                 }
             }
 

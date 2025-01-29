@@ -11,10 +11,9 @@ namespace MathMatrixChat
     {
         static void Main(string[] args)
         {
-            double[] data = { 3, 4, 5, 7, 8 };
-            Matrix matr = new Matrix(3, 3, data, true, 2);
-            matr = matr.Transpose();
-            Console.WriteLine(matr.ToString());
+            Matrix matr1 = new Matrix(3, 3,true);
+            Console.WriteLine(matr1.ToString());
+
         }
     }
 }
