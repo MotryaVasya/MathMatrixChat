@@ -22,7 +22,7 @@ namespace MathMatrixChat
             Matrixx = new double[rows, columns];
             if (isSingle)
                 if (rows != columns) throw new ArgumentException("Единичная матрица должна быть квадратной");
-                for (int i = 0; i < rows; i++) Matrixx[i,i] = 1;
+                for (int i = 0; i < rows; i++) Matrixx[i, i] = 1;
             
         }
         public Matrix(int rows, int columns, double element) : this(rows, columns)
